@@ -1,0 +1,35 @@
+package com.example.test4;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class ReservecompleteActivity extends AppCompatActivity {
+    private Button home;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_complete);
+
+        home = findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ReservecompleteActivity.this, MainActivity.class);
+                startActivity(intent);
+                finishAffinity();
+            }
+        });
+    }
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(ReservecompleteActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
+}

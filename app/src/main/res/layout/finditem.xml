@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:src="@drawable/hnulogo"
+            android:id="@+id/finditemImage"
+            />
+
+        <TextView
+            android:id="@+id/finditemText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="분실물" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="작성자"
+            android:textColor="@color/white"
+            android:padding="3dp"
+            android:layout_marginLeft="8dp"
+            android:textColorHint="@color/white"
+            android:id="@+id/nameText"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="2023-05-31"
+            android:textColor="@color/white"
+            android:padding="3dp"
+            android:layout_marginLeft="8dp"
+            android:textColorHint="@color/white"
+            android:id="@+id/dateText"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
