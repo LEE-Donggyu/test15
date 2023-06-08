@@ -4,7 +4,10 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -33,16 +36,20 @@ public class FindItemAdapter extends BaseAdapter {
         return i;
     }
 
+
+
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
         View v = View.inflate(context, R.layout.finditem, null);
         TextView itemText = v.findViewById(R.id.finditemText);
         TextView nameText = v.findViewById(R.id.nameText);
         TextView dateText = v.findViewById(R.id.dateText);
+        ImageView imageView = v.findViewById(R.id.finditemImage);
 
         itemText.setText(findList.get(i).getItem());
         nameText.setText(findList.get(i).getName());
         dateText.setText(findList.get(i).getDate());
+        Glide.with(context).load("http://bestknow98.cafe24.com/"+findList.get(i).getImagepath()).into(imageView);
 
         v.setTag(findList.get(i).getItem());
         return v;

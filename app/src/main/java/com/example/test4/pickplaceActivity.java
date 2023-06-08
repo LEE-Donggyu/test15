@@ -75,7 +75,7 @@ public class pickplaceActivity extends AppCompatActivity {
     }
 
     class BackgroundTask extends AsyncTask<Void, Void, String> {
-        String target = "https://stone-cjioq.run.goorm.site/stone/pickplace.php";
+        String target = "http://bestknow98.cafe24.com/pickplace.php";
         int routeID;
 
         public BackgroundTask(int routeID){

@@ -24,7 +24,7 @@ public class ReservecheckActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservedata_check);
-        String page = "https://stone-cjioq.run.goorm.site/stone/complete.php";
+        String page = "http://bestknow98.cafe24.com/reservecount.php";
         Intent intent = getIntent();
         String userID = intent.getStringExtra("userID");
         String date = intent.getStringExtra("date");

@@ -7,20 +7,15 @@ public class FindItem {
     String name;
     String date;
     String item;
-    private Bitmap image;
+    String imagepath;
 
-    public Bitmap getImage() {
-        return image;
-    }
 
-    public void setImage(Bitmap image) {
-        this.image = image;
-    }
 
-    public FindItem(String name, String date, String item) {
+    public FindItem(String name, String date, String item, String imagepath) {
         this.name = name;
         this.date = date;
         this.item = item;
+        this.imagepath = imagepath;
     }
 
     public String getName() {
@@ -45,5 +40,13 @@ public class FindItem {
 
     public void setItem(String item) {
         this.item = item;
+    }
+
+    public String getImagepath() {
+        return imagepath;
+    }
+
+    public void setImagepath(String imagepath) {
+        this.imagepath = imagepath;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.test4;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,7 +41,7 @@ public class LostItemActivity extends AppCompatActivity {
         adapter = new FindItemAdapter(getApplicationContext(), findList);
         findListView.setAdapter(adapter);
 
-        findList.add(new FindItem("공지사항", "개발자1", "2023-05-31"));
+        findList.add(new FindItem("공지사항", "개발자1", "2023-05-31", null));
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -90,13 +91,16 @@ public class LostItemActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
                 int count = 0;
-                String findItem, findName, findDate;
+                String findItem, findName, findDate, findImage;
+
                 while (count < jsonArray.length()) {
                     JSONObject object = jsonArray.getJSONObject(count);
                     findItem = object.getString("findItem");
                     findName = object.getString("findName");
                     findDate = object.getString("findDate");
-                    FindItem finditem = new FindItem(findItem, findName, findDate);
+                    findImage = object.getString("imagepath");
+
+                    FindItem finditem = new FindItem(findItem, findName, findDate, findImage);
                     findList.add(finditem);
                     count++;
                 }
