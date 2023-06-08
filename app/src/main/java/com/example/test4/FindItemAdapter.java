@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -49,7 +49,8 @@ public class FindItemAdapter extends BaseAdapter {
         itemText.setText(findList.get(i).getItem());
         nameText.setText(findList.get(i).getName());
         dateText.setText(findList.get(i).getDate());
-        Glide.with(context).load("http://bestknow98.cafe24.com/"+findList.get(i).getImagepath()).into(imageView);
+//        String imagePath = "http://bestknow98.cafe24.com" + findList.get(i).getImagepath();
+//        Picasso.get().load(imagePath).into(imageView);
 
         v.setTag(findList.get(i).getItem());
         return v;

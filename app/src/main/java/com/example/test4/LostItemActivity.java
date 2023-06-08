@@ -41,7 +41,7 @@ public class LostItemActivity extends AppCompatActivity {
         adapter = new FindItemAdapter(getApplicationContext(), findList);
         findListView.setAdapter(adapter);
 
-        findList.add(new FindItem("공지사항", "개발자1", "2023-05-31", null));
+        findList.add(new FindItem("공지사항", "개발자1", "2023-05-31"));
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -54,58 +54,59 @@ public class LostItemActivity extends AppCompatActivity {
 
     class BackgroundTask extends AsyncTask<Void, Void, String> {
 
-        String target = "http://bestknow98.cafe24.com/FindItem.php";
+        String target;
+
+        @Override
+        protected void onPreExecute(){
+            target = "http://bestknow98.cafe24.com/FindItem.php"
+        }
 
         @Override
         protected String doInBackground(Void... voids) {
-            try {
+            try{
                 URL url = new URL(target);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 String temp;
                 StringBuilder stringBuilder = new StringBuilder();
-                while ((temp = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(temp).append("\n");
+                while((temp = bufferedReader.readLine())!=null){
+                    stringBuilder.append(temp + "\n");
                 }
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
-
                 return stringBuilder.toString().trim();
-            } catch (Exception e) {
+            }
+            catch(Exception e){
                 e.printStackTrace();
             }
             return null;
         }
-
         @Override
-        public void onProgressUpdate(Void... values) {
+        public void onProgressUpdate(Void...values){
             super.onProgressUpdate();
         }
 
         @Override
-        public void onPostExecute(String result) {
-            try {
-                Log.d("tag",result);
+        public void onPostExecute(String result){
+            try{
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
                 int count = 0;
-                String findItem, findName, findDate, findImage;
-
-                while (count < jsonArray.length()) {
+                String userName, LostDate, LostItemName, LostItemPicture;
+                while(count < jsonArray.length()){
                     JSONObject object = jsonArray.getJSONObject(count);
-                    findItem = object.getString("findItem");
-                    findName = object.getString("findName");
-                    findDate = object.getString("findDate");
-                    findImage = object.getString("imagepath");
-
-                    FindItem finditem = new FindItem(findItem, findName, findDate, findImage);
-                    findList.add(finditem);
+                    userName = object.getString("userName");
+                    LostDate = object.getString("LostDate");
+                    LostItemName = object.getString("LostItemName");
+                    LostItemPicture = object.getString("LostItemPicture");
+                    FindItem findItem = new FindItem(userName, LostDate, LostItemName, LostItemPicture);
+                    findList.add(findItem);
                     count++;
                 }
-                adapter.notifyDataSetChanged(); // 어댑터에 데이터 변경을 알림
-            } catch (Exception e) {
+            }
+            catch (Exception e){
                 e.printStackTrace();
             }
         }
