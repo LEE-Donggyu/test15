@@ -24,7 +24,7 @@ public class ReservecheckActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservedata_check);
-        String page = "http://bestknow98.cafe24.com/reservecount.php";
+        String page = "http://bestknow98.cafe24.com/complete.php";
         Intent intent = getIntent();
         String userID = intent.getStringExtra("userID");
         String date = intent.getStringExtra("date");
@@ -76,6 +76,7 @@ public class ReservecheckActivity extends AppCompatActivity {
                     thread.start();
                 }
                 Intent next = new Intent(ReservecheckActivity.this, ReservecompleteActivity.class);
+                next.putExtra("userID",userID);
                 startActivity(next);
                 finishAffinity();
             }

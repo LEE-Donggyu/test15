@@ -14,11 +14,16 @@ public class ReservecompleteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete);
 
+        Intent intent = getIntent();
+        String userID = intent.getStringExtra("userID"); //유저아이디
+
+
         home = findViewById(R.id.home);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ReservecompleteActivity.this, MainActivity.class);
+                intent.putExtra("userID", userID);
                 startActivity(intent);
                 finishAffinity();
             }
@@ -28,6 +33,8 @@ public class ReservecompleteActivity extends AppCompatActivity {
     public void onBackPressed(){
         Intent intent = new Intent(ReservecompleteActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        String userID = intent.getStringExtra("userID"); //유저아이디
+        intent.putExtra("userID", userID);
         startActivity(intent);
         finish();
     }

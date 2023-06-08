@@ -3,30 +3,29 @@ package com.example.test4;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.app.DatePickerDialog;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class ReservationActivity extends AppCompatActivity {
-    private ListView ReservationListView; //findListview
-    private ReservationAdapter reservationAdapter;
-    private List<ReservationItem> reservationList; //findlist
     String userID;
     private Button select_route; //노선선택버튼
     private Button select_date; //날짜선택버튼
@@ -38,6 +37,11 @@ public class ReservationActivity extends AppCompatActivity {
     private LinearLayout turn_select;
     private RelativeLayout first_turn;
     private RelativeLayout second_turn;
+    private TextView first_count;
+    private TextView second_count;
+    private Runnable sendDataRunnable;
+    private String server_url;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,13 +49,14 @@ public class ReservationActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userID = intent.getStringExtra("userID");
         select_route = findViewById(R.id.route_select);
+        server_url = "http://bestknow98.cafe24.com/reservecount.php";
         select_route.setOnClickListener(new View.OnClickListener() { //노선선택 버튼 코드
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ReservationActivity.this);
                 builder.setTitle("노선 선택");
 
-                final String[] routes = {"세종","도안","계룡","가오동"};
+                final String[] routes = {"도안","세종, 노은","계룡, 진잠, 관저동","가오동, 판암동"};
                 builder.setItems(routes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
@@ -76,25 +81,79 @@ public class ReservationActivity extends AppCompatActivity {
         view_btn.setOnClickListener(new View.OnClickListener() { //조회버튼 코드
             @Override
             public void onClick(View view) {
+
+                if (route_item.isEmpty()) {
+                    showAlertDialog("알림", "노선을 선택해주세요.");
+                    return;
+                }
+                if (calendar == null) {
+                    showAlertDialog("알림", "날짜를 선택해주세요.");
+                    return;
+                }
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                String date = dateFormat.format(calendar.getTime());
+                first_count = findViewById(R.id.firstcount);
+                second_count = findViewById(R.id.secondcount);
                 turn_select = findViewById(R.id.turn_select);
                 first_turn = findViewById(R.id.first_turn);
                 second_turn = findViewById(R.id.second_turn);
-                if(route_item.isEmpty()){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ReservationActivity.this);
-                    builder.setTitle("알림").setMessage("노선을 선택해주세요").setPositiveButton("확인",null).show();
-                } else if (calendar == null) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ReservationActivity.this);
-                    builder.setTitle("알림").setTitle("날짜를 선택해주세요").setPositiveButton("확인",null).show();
-                } else{
-                    if(route_item.equals("세종")){ //세종은 1회차밖에 없기때문에 2회차선택레이아웃을 안보이게한다.
-                        turn_select.setVisibility(View.VISIBLE);
-                        first_turn.setVisibility(View.VISIBLE);
-                        second_turn.setVisibility(View.GONE);
-                    }else{
-                        turn_select.setVisibility(View.VISIBLE);
-                        first_turn.setVisibility(View.VISIBLE);
-                        second_turn.setVisibility(View.VISIBLE);
+                sendDataRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            URL url = new URL(server_url + "?date=" + date + "&routename=" + route_item);
+                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                            conn.setRequestMethod("GET");
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                            StringBuilder response = new StringBuilder();
+                            String line;
+                            while ((line = reader.readLine()) != null) {
+                                response.append(line);
+                            }
+                            reader.close();
+
+                            JSONObject json = new JSONObject(response.toString());
+                            JSONArray responseArray = json.getJSONArray("response");
+
+                            int onecount = 0; //1회차정보 세기
+                            int twocount = 0; //2회차정보 세기
+                            for (int i = 0; i < responseArray.length(); i++) {
+                                JSONObject item = responseArray.getJSONObject(i);
+                                String turn = item.getString("turn");
+                                if (turn.equals("1")) {
+                                    onecount++;
+                                } else if (turn.equals("2")) {
+                                    twocount++;
+                                }
+                            }
+
+                            int finalOnecount = 45 - onecount; //1회차 남은인원
+                            int finalTwocount = 45 - twocount; //2회차 남은인원
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    first_count.setText(String.valueOf(finalOnecount));
+                                    second_count.setText(String.valueOf(finalTwocount));
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                     }
+                };
+                Thread thread = new Thread(sendDataRunnable);
+                thread.start();
+
+                if (route_item.equals("세종")) { //세종은 1회차밖에 없기 때문에 2회차 선택 레이아웃을 안보이게 한다.
+                    turn_select.setVisibility(View.VISIBLE);
+                    first_turn.setVisibility(View.VISIBLE);
+                    second_turn.setVisibility(View.GONE);
+                } else {
+                    turn_select.setVisibility(View.VISIBLE);
+                    first_turn.setVisibility(View.VISIBLE);
+                    second_turn.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -105,66 +164,83 @@ public class ReservationActivity extends AppCompatActivity {
         first_reserve.setOnClickListener(new View.OnClickListener() { //1회차는 turn이라는 회차를 저장하는 변수에 1을 넘긴다
             @Override
             public void onClick(View view) {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.getDefault());
-                String date = dateFormat.format(calendar.getTime()); //시간값을 시간타입에서 문자열 타입으로 바꾸기
-                int turn = 1;//회차
-                Intent next = new Intent(ReservationActivity.this, pickplaceActivity.class);
-                next.putExtra("userID",userID); //유저아이디
-                next.putExtra("turn",turn); //회차
-                next.putExtra("select_route",route_item); //선택노선
-                next.putExtra("select_date",date); //선택날짜
-                startActivity(next);
+                if (calendar == null || route_item.isEmpty()) {
+                    showAlertDialog("알림", "날짜와 노선을 선택해주세요.");
+                    return;
+                }
 
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                String date = dateFormat.format(calendar.getTime());
+                int turn = 1; //회차
+
+                Intent next = new Intent(ReservationActivity.this, pickplaceActivity.class);
+                next.putExtra("userID", userID); //유저아이디
+                next.putExtra("turn", turn); //회차
+                next.putExtra("select_route", route_item); //선택노선
+                next.putExtra("select_date", date); //선택날짜
+                startActivity(next);
             }
         });
+
         second_reserve.setOnClickListener(new View.OnClickListener() {//2회차는 turn이라는 회차를 저장하는 변수에 2을 넘긴다
             @Override
             public void onClick(View view) {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.getDefault());
-                String date = dateFormat.format(calendar.getTime()); //시간값을 시간타입에서 문자열 타입으로 바꾸기
-                int turn = 2;//회차
+                if (calendar == null || route_item.isEmpty()) {
+                    showAlertDialog("알림", "날짜와 노선을 선택해주세요.");
+                    return;
+                }
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                String date = dateFormat.format(calendar.getTime());
+                int turn = 2; //회차
+
                 Intent next = new Intent(ReservationActivity.this, pickplaceActivity.class);
-                next.putExtra("userID",userID);
-                next.putExtra("turn",turn);
-                next.putExtra("select_route",route_item);
-                next.putExtra("select_date",date);
+                next.putExtra("userID", userID);
+                next.putExtra("turn", turn);
+                next.putExtra("select_route", route_item);
+                next.putExtra("select_date", date);
                 startActivity(next);
             }
         });
-
-
     }
-    private void showDatePicker(){
+
+    private void showDatePicker() {
         final Calendar currentDate = Calendar.getInstance();
-        final Calendar dateLimit =  Calendar.getInstance();
-        dateLimit.add(Calendar.DAY_OF_MONTH,3); //날짜선택가능수는 현재날짜에서부터 3일 현재날짜를 포함하면 4일이다
-        //오늘날짜가 10일이면 10 11 12 13일을 선택가능하다.
+        final Calendar dateLimit = Calendar.getInstance();
+        dateLimit.add(Calendar.DAY_OF_MONTH, 3); //날짜선택 가능 수는 현재날짜에서부터 3일이므로 현재날짜를 포함하면 4일이다.
+
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 calendar = Calendar.getInstance();
-                calendar.set(year,month,dayOfMonth);
+                calendar.set(year, month, dayOfMonth);
                 updateSelectedDateButton();
             }
-        },
-                currentDate.get(Calendar.YEAR),
-                currentDate.get(Calendar.MONTH),
-                currentDate.get(Calendar.DAY_OF_MONTH)
-        );
+        }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DAY_OF_MONTH));
+
         datePickerDialog.getDatePicker().setMinDate(currentDate.getTimeInMillis());
         datePickerDialog.getDatePicker().setMaxDate(dateLimit.getTimeInMillis());
         datePickerDialog.show();
     }
 
-    private void updateSelectedDateButton(){
-        if(calendar != null){
-            //알수없는 문자열로 된 날짜배열을 사람이 알기쉬운 년월일 순으로 보이게한다
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.getDefault());
+    private void updateSelectedDateButton() {
+        if (calendar != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             String selectedDateStr = dateFormat.format(calendar.getTime());
-            //날짜선택한 버튼을 선택한 날짜의 텍스트로 바꾼다.
             select_date.setText(selectedDateStr);
         }
     }
 
+    private void showAlertDialog(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("확인", null)
+                .show();
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

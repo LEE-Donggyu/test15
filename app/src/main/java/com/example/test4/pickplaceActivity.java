@@ -44,13 +44,15 @@ public class pickplaceActivity extends AppCompatActivity {
         reservationAdapter = new ReservationAdapter(pickplaceActivity.this, reservationList);
         ReservationListView.setAdapter(reservationAdapter);
         reservationList.clear();
-        int routeID;
+        int routeID = 0;
         if(route.equals("도안")){ //앞에 선택한노선이 도안이면 routeID에 1을주어 도안과 연관된 정류장을 DB에서 가져옴
             routeID = 1;
-        } else if (route.equals("계룡")) {
+        } else if (route.equals("세종, 노은")) {
             routeID = 2;
-        }else{
-            routeID = 0;
+        } else if(route.equals("계룡, 진잠, 관저동")){
+            routeID = 3;
+        } else if(route.equals("가오동, 판암동")){
+            routeID = 4;
         }
 
         ReservationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

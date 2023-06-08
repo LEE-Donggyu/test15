@@ -113,6 +113,8 @@ public class LostitemUploadActivity extends AppCompatActivity {
                                     public void onResponse(String response) {
                                         if (response.equals("success")) {
                                             Toast.makeText(getApplicationContext(), "분실물 목록에 추가하였습니다.", Toast.LENGTH_SHORT).show();
+                                            Intent successintent = new Intent(LostitemUploadActivity.this, LostItemActivity.class);
+                                            startActivity(successintent);
                                             finish();
                                         } else {
                                             Toast.makeText(getApplicationContext(), "분실물 추가에 실패했습니다.", Toast.LENGTH_SHORT).show();
