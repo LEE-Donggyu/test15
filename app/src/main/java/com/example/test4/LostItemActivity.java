@@ -41,7 +41,7 @@ public class LostItemActivity extends AppCompatActivity {
         adapter = new FindItemAdapter(getApplicationContext(), findList);
         findListView.setAdapter(adapter);
 
-        findList.add(new FindItem("공지사항", "개발자1", "2023-05-31"));
+        findList.add(new FindItem("공지사항", "개발자1", "2023-05-31", null));
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -58,7 +58,7 @@ public class LostItemActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute(){
-            target = "http://bestknow98.cafe24.com/FindItem.php"
+            target = "http://bestknow98.cafe24.com/FindItem.php";
         }
 
         @Override
@@ -101,10 +101,11 @@ public class LostItemActivity extends AppCompatActivity {
                     LostDate = object.getString("LostDate");
                     LostItemName = object.getString("LostItemName");
                     LostItemPicture = object.getString("LostItemPicture");
-                    FindItem findItem = new FindItem(userName, LostDate, LostItemName, LostItemPicture);
+                    FindItem findItem = new FindItem(LostItemName,  LostDate, userName, LostItemPicture);
                     findList.add(findItem);
                     count++;
                 }
+                adapter.notifyDataSetChanged();
             }
             catch (Exception e){
                 e.printStackTrace();

@@ -9,6 +9,14 @@ public class FindItem {
     String item;
     String imagepath;
 
+    public String getImagepath() {
+        return imagepath;
+    }
+
+    public void setImagepath(String imagepath) {
+        this.imagepath = imagepath;
+    }
+
     public String getName() {
         return name;
     }
@@ -33,9 +41,10 @@ public class FindItem {
         this.item = item;
     }
 
-    public FindItem(String name, String date, String item) {
+    public FindItem(String name, String date, String item, String imagepath) {
         this.name = name;
         this.date = date;
         this.item = item;
+        this.imagepath = imagepath;
     }
 }

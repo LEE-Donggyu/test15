@@ -49,10 +49,9 @@ public class FindItemAdapter extends BaseAdapter {
         itemText.setText(findList.get(i).getItem());
         nameText.setText(findList.get(i).getName());
         dateText.setText(findList.get(i).getDate());
-//        String imagePath = "http://bestknow98.cafe24.com" + findList.get(i).getImagepath();
-//        Picasso.get().load(imagePath).into(imageView);
+        String imagePath = "http://bestknow98.cafe24.com/" + findList.get(i).getImagepath();
+        Picasso.get().load(imagePath).into(imageView);
 
-        v.setTag(findList.get(i).getItem());
         return v;
 
     }
