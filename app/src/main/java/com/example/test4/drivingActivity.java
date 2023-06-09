@@ -108,7 +108,7 @@ public class drivingActivity extends AppCompatActivity implements OnMapReadyCall
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,15));
             }
         };
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,3000,0,locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,0,locationListener);
     }
 
     @Override
