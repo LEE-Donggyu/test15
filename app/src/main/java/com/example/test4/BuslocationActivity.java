@@ -81,7 +81,7 @@ public class BuslocationActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(Void... params) {
                 try {
-                    String server_url = "https://stone-cjioq.run.goorm.site/stone/buslocation.php";
+                    String server_url = "http://bestknow98.cafe24.com/buslocation.php";     // 버스 위치 확인
                     URL url = new URL(server_url + "?id=" + busID);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");
