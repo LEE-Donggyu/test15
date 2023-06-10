@@ -4,6 +4,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="250px"
+        android:text="탑승 장소 선택"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:fontFamily="@font/hannamfree"
+        android:background="@color/hannam_color"
+        android:textColor="@color/white"
+        android:textSize="50dp"
+        android:layout_marginBottom="30px"/>
 
     <ListView
         android:layout_width="match_parent"

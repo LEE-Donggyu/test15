@@ -1,7 +1,5 @@
 package com.example.test4;
 
-import android.graphics.Bitmap;
-
 public class FindItem {
 
     String name;

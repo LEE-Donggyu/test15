@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".RegisterActivity">
 
     <LinearLayout
@@ -18,16 +19,16 @@
             android:background="@color/white">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="250px"
                 android:text="회원가입"
                 android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="25dp"
-                android:layout_marginTop="10dp"
-                />
+                android:gravity="center"
+                android:fontFamily="@font/hannamfree"
+                android:background="@color/hannam_color"
+                android:textColor="@color/white"
+                android:textSize="50dp"
+                android:layout_marginBottom="30px"/>
 
         </LinearLayout>
 
@@ -50,17 +51,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="아이디"
+                        android:layout_gravity="center"
                         android:textAlignment="center"
+                        android:fontFamily="@font/hannamfree"
+                        android:textColor="@color/hannam_text"
                         android:gravity="center"
                         android:textSize="20dp"/>
                     <Button
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="30dp"
                         android:text="중복확인"
                         android:textSize="20dp"
                         android:layout_marginLeft="20dp"
+                        android:background="@color/hannam_color"
                         android:textStyle="bold"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:id="@+id/validateButton"
                         />
                 </LinearLayout>
@@ -68,6 +73,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/hannamfree"
                     android:hint="아이디를 입력해주세요"
                     android:textColor="@color/gray"
                     android:id="@+id/idText"
@@ -84,7 +90,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="비밀번호"
-
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/hannamfree"
+                    android:textColor="@color/hannam_text"
                     android:textSize="20dp"/>
                 <EditText
                     android:inputType="textPassword"
@@ -92,6 +100,7 @@
                     android:layout_height="wrap_content"
                     android:hint="비밀번호를 입력해주세요"
                     android:textSize="20dp"
+                    android:fontFamily="@font/hannamfree"
                     android:textColor="@color/gray"
                     android:id="@+id/passwordText"
                     />
@@ -107,11 +116,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="이름"
+                    android:textColor="@color/hannam_text"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/hannamfree"
                     android:textSize="20dp"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="이름 입력해주세요"
+                    android:fontFamily="@font/hannamfree"
                     android:textSize="20dp"
                     android:textColor="@color/gray"
                     android:id="@+id/nameText"
@@ -128,12 +141,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="전화번호"
+                    android:textColor="@color/hannam_text"
+                    android:fontFamily="@font/hannamfree"
+                    android:layout_marginBottom="10dp"
                     android:textSize="20dp"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="전화번호를 입력해주세요"
                     android:textSize="20dp"
+                    android:fontFamily="@font/hannamfree"
                     android:textColor="@color/gray"
                     android:id="@+id/phoneText"
                     />
@@ -151,8 +168,9 @@
                     android:layout_height="match_parent"
                     android:text="가입하기"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20dp"
+                    android:background="@color/hannam_color"
                     android:id="@+id/registerButton"
                     />
 

@@ -1,12 +1,8 @@
 package com.example.test4;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +21,6 @@ import java.util.List;
 public class LostItemActivity extends AppCompatActivity {
 
     String userID = null;
-    String userPassword = null;
 
     private ListView findListView;
     private FindItemAdapter adapter;
@@ -41,12 +36,10 @@ public class LostItemActivity extends AppCompatActivity {
         adapter = new FindItemAdapter(getApplicationContext(), findList);
         findListView.setAdapter(adapter);
 
-        findList.add(new FindItem("공지사항", "개발자1", "2023-05-31", null));
 
         Intent intent = getIntent();
         if (intent != null) {
             userID = intent.getStringExtra("userID");
-            userPassword = intent.getStringExtra("userPassword");
         }
 
         new BackgroundTask().execute();

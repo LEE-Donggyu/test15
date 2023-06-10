@@ -21,7 +21,10 @@
             android:id="@+id/end_drive"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="운행종료" />
+            android:background="@color/hannam_color"
+            android:textColor="@color/white"
+            android:fontFamily="@font/hannamfree"
+            android:text="운행 종료" />
 
         <fragment
             android:id="@+id/map"

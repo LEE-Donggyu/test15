@@ -12,12 +12,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/hannam_text"
+            android:fontFamily="@font/hannamfree"
+            android:layout_marginBottom="30dp"
             android:text="예약이 완료 되었습니다."/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="홈으로"
+            android:background="@color/hannam_color"
+            android:textColor="@color/white"
+            android:fontFamily="@font/hannamfree"
             android:id="@+id/home"/>
 
 

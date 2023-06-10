@@ -10,122 +10,180 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="250px"
+            android:text="통학버스 예약"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:fontFamily="@font/hannamfree"
+            android:background="@color/hannam_color"
+            android:textColor="@color/white"
+            android:textSize="50dp"
+            android:layout_marginBottom="30px"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/route_select"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/hannamfree"
+                android:textColor="@color/hannam_text"
+                android:textSize="14dp"
                 android:text="노선선택" />
 
             <Button
                 android:id="@+id/date_select"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/hannamfree"
+                android:textColor="@color/hannam_text"
+                android:layout_weight="1"
+                android:textSize="14dp"
                 android:text="날짜선택"
-                android:layout_centerInParent="true"
                 android:textAlignment="center" />
 
             <Button
                 android:id="@+id/route_check"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="30dp"
+                android:fontFamily="@font/hannamfree"
+                android:textColor="@color/hannam_text"
+                android:textSize="14dp"
+                android:layout_weight="1"
                 android:text="조회" />
 
 
-        </RelativeLayout>
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/turn_select"
             android:visibility="gone"
+            android:id="@+id/turn_select"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:textSize="25dp"
+                    android:fontFamily="@font/hannamfree"
+                    android:textColor="@color/hannam_text"
                     android:text="회차"/>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:layout_centerInParent="true"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:textSize="25dp"
+                    android:fontFamily="@font/hannamfree"
+                    android:textColor="@color/hannam_text"
                     android:text="인원"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
 
 
-            </RelativeLayout>
-            <RelativeLayout
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:id="@+id/first_turn"
-                android:layout_marginTop="15dp">
+                android:layout_marginBottom="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/hannamfree"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"
                     android:textSize="20dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:textAlignment="center"
                     android:text="1회차"/>
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:id="@+id/firstcount"
+                    android:gravity="center"
+                    android:fontFamily="@font/hannamfree"
+                    android:textColor="@color/black"
+                    android:textAlignment="center"
                     android:textSize="20dp"
-                    android:layout_centerInParent="true"
                     android:text="45"/>
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:id="@+id/first_reserve"
                     android:textSize="20dp"
-                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/hannamfree"
+                    android:textColor="@color/black"
                     android:text="선택"/>
 
+            </LinearLayout>
 
-            </RelativeLayout>
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:id="@+id/second_turn"
-                android:layout_marginTop="15dp">
+                android:layout_marginBottom="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/hannamfree"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"
                     android:textSize="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="30dp"
+                    android:gravity="center"
+                    android:textAlignment="center"
                     android:text="2회차"/>
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:id="@+id/secondcount"
+                    android:gravity="center"
+                    android:fontFamily="@font/hannamfree"
+                    android:textColor="@color/black"
+                    android:textAlignment="center"
                     android:textSize="20dp"
-                    android:layout_centerInParent="true"
                     android:text="45"/>
+
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:id="@+id/second_reserve"
                     android:textSize="20dp"
-                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/hannamfree"
+                    android:textColor="@color/black"
                     android:text="선택"/>
 
+            </LinearLayout>
 
-            </RelativeLayout>
+
+
 
 
 

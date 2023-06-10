@@ -73,20 +73,21 @@ public class pickplaceActivity extends AppCompatActivity {
         });
 
 
-        new BackgroundTask(routeID).execute();
+        new BackgroundTask(routeID,turn).execute();
     }
 
     class BackgroundTask extends AsyncTask<Void, Void, String> {
         String target = "http://bestknow98.cafe24.com/pickplace.php";
         int routeID;
-
-        public BackgroundTask(int routeID){
+        int turn;
+        public BackgroundTask(int routeID, int turn){
             this.routeID = routeID;
+            this.turn = turn;
         }
         @Override
         protected String doInBackground(Void... voids) {
             try{
-                URL url = new URL(target + "?routeID=" + routeID);
+                URL url = new URL(target + "?routeID=" + routeID+"&turn="+turn);
                 Log.i("tag",""+url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("GET");
@@ -130,8 +131,12 @@ public class pickplaceActivity extends AppCompatActivity {
                     while(count < jsonArray.length()){
                         JSONObject object = jsonArray.getJSONObject(count);
                         bus_start = object.getString("pickupname");
-                        ReservationItem reservationItem = new ReservationItem(bus_start);
-                        reservationList.add(reservationItem);
+                        bus_time = object.getString("bus_time");
+                        ReservationItem reservationItem = new ReservationItem(bus_start,bus_time);
+                        if(!bus_time.equals("")){
+                            reservationList.add(reservationItem);
+                            Log.i("tag","bus_time"+bus_time);
+                        }
                         count++;
                     }
                     reservationAdapter.notifyDataSetChanged();

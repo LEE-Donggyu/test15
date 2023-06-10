@@ -1,11 +1,11 @@
 package com.example.test4;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             userID = intent.getStringExtra("userID");
-            userPassword = intent.getStringExtra("userPassword");
         }
 
         Button findButton = findViewById(R.id.findButton);
@@ -34,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
                 // activity_lost_item으로 이동하는 Intent 생성
                 Intent lostitemintent = new Intent(MainActivity.this, LostItemActivity.class);
                 lostitemintent.putExtra("userID", userID);
-                lostitemintent.putExtra("userPassword", userPassword);
                 startActivity(lostitemintent);
             }
         });
@@ -45,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
                 // activity_reservation으로 이동하는 Intent 생성
                 Intent reservation = new Intent(MainActivity.this, ReservationActivity.class);
                 reservation.putExtra("userID", userID);
-                reservation.putExtra("userPassword", userPassword);
                 startActivity(reservation);
             }
         });
@@ -56,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
                 // activity_ticket으로 이동하는 Intent 생성
                 Intent ticketintent = new Intent(MainActivity.this, TicketActivity.class);
                 ticketintent.putExtra("userID", userID);
-                ticketintent.putExtra("userPassword", userPassword);
                 startActivity(ticketintent);
             }
         });

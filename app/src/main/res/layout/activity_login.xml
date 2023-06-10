@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".LoginActivity">
 
     <LinearLayout
@@ -29,8 +30,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="한남대학교"
-                android:textColor="@color/black"
-                android:textStyle="bold"
+                android:fontFamily="@font/hannamfree"
+                android:textColor="@color/hannam_text"
                 android:textSize="25dp"
                 android:layout_marginTop="10dp"
                 />
@@ -38,9 +39,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="통학 버스"
-                android:textColor="@color/black"
-                android:textStyle="bold"
+                android:text="버스타구"
+                android:fontFamily="@font/hannamfree"
+                android:textColor="@color/hannam_text"
                 android:textSize="18dp"
                 android:layout_marginTop="10dp"
                 />
@@ -62,6 +63,8 @@
                     android:layout_height="wrap_content"
                     android:text="아이디"
                     android:textSize="20dp"
+                    android:textColor="@color/hannam_text"
+                    android:fontFamily="@font/hannamfree"
                     android:layout_marginTop="20dp"
                     />
                 <EditText
@@ -70,6 +73,7 @@
                     android:hint="아이디를 입력해주세요"
                     android:textSize="20dp"
                     android:textColor="@color/gray"
+                    android:fontFamily="@font/hannamfree"
                     android:layout_marginTop="15dp"
                     android:id="@+id/idText"
                     />
@@ -87,12 +91,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="비밀번호"
+                    android:textColor="@color/hannam_text"
+                    android:fontFamily="@font/hannamfree"
                     android:textSize="20dp"/>
                 <EditText
                     android:inputType="textPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="비밀번호를 입력해주세요"
+                    android:fontFamily="@font/hannamfree"
                     android:layout_marginTop="15dp"
                     android:textSize="20dp"
                     android:textColor="@color/gray"
@@ -113,9 +120,11 @@
                     android:layout_height="match_parent"
                     android:text="로그인"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/hannamfree"
                     android:textSize="20dp"
                     android:id="@+id/loginButton"
+                    android:background="@color/hannam_color"
                     />
                 <TextView
                     android:layout_width="match_parent"
@@ -123,6 +132,7 @@
                     android:text="회원가입"
                     android:textSize="20dp"
                     android:layout_gravity="center"
+                    android:fontFamily="@font/hannamfree"
                     android:layout_marginTop="20dp"
                     android:textAlignment="center"
                     android:id="@+id/registerButton"

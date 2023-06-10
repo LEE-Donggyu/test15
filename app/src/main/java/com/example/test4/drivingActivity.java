@@ -62,6 +62,7 @@ public class drivingActivity extends AppCompatActivity implements OnMapReadyCall
             @Override
             public void onClick(View view) {
                 Intent end = new Intent(drivingActivity.this, driverActivity.class);
+                end.putExtra("userID", userID);
                 finishAffinity();
                 drivingActivity.this.startActivity(end);
             }

@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -14,16 +15,29 @@ public class driverActivity extends AppCompatActivity {
 
     private String userID;
     private String userPassword;
+    private TextView route;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver);
 
+        route = findViewById(R.id.route_name);
+
         Intent intent = getIntent();
         if (intent != null) {
             userID = intent.getStringExtra("userID");
             userPassword = intent.getStringExtra("userPassword");
+        }
+
+        if(userID.equals("admin1")){
+            route.setText("도안 노선");
+        } else if (userID.equals("admin2")) {
+            route.setText("세종, 노은 노선");
+        } else if (userID.equals("admin3")) {
+            route.setText("계룡, 진잠, 관저동 노선");
+        } else if (userID.equals("admin4")) {
+            route.setText("가오동, 판암동 노선");
         }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)

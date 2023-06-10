@@ -1,14 +1,10 @@
 package com.example.test4;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -40,7 +36,9 @@ public class ReservationAdapter extends BaseAdapter{
     public View getView(int i, View convertView, ViewGroup parent) {
         View v = View.inflate(context, R.layout.reserve, null);
         TextView startText = v.findViewById(R.id.bus_start);
+        TextView timeText = v.findViewById(R.id.bus_time);
         startText.setText(ReservationList.get(i).getStart());
+        timeText.setText(ReservationList.get(i).getBus_time());
         v.setTag(ReservationList.get(i).getStart());
         return v;
     }

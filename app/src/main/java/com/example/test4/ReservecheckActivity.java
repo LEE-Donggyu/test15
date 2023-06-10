@@ -37,8 +37,8 @@ public class ReservecheckActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String getTime = dateFormat.format(current);
         data = findViewById(R.id.reserve_data);
-        data.setText("버스예약날짜: "+date+"\n"+"선택하신장소: "+place+"\n"+"회차: "+turn+"\n"+"선택하신 노선:"+route+"\n"+
-                "유저아이디:"+userID+"\n"+"예약한 날짜:"+getTime);
+        data.setText("예약 날짜: "+date+"\n"+"선택 장소: "+place+"\n"+"회차: "+turn+"\n"+"선택 노선:"+route+"\n"+
+                "이름:"+userID+"\n"+"예약 날짜:"+getTime);
 
         complete = findViewById(R.id.reserve_complete);
         complete.setOnClickListener(new View.OnClickListener() {

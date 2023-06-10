@@ -1,11 +1,5 @@
 package com.example.test4;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,6 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -39,7 +39,6 @@ public class LostitemUploadActivity extends AppCompatActivity {
     Bitmap bitmap;
 
     String userID;
-    String userPassword = null;
 
     ImageView imageView;
     Button findimgButton;
@@ -52,7 +51,6 @@ public class LostitemUploadActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             userID = intent.getStringExtra("userID");
-            userPassword = intent.getStringExtra("userPassword");
         }
 
         imageView = findViewById(R.id.uploadimg);

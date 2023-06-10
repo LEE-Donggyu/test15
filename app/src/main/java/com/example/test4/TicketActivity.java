@@ -26,7 +26,6 @@ public class TicketActivity extends AppCompatActivity {
     private List<Ticket> ticketList;
 
     private String userID;
-    private String userPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,6 @@ public class TicketActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             userID = intent.getStringExtra("userID");
-            userPassword = intent.getStringExtra("userPassword");
         }
 
         ticketListView = findViewById(R.id.reservationList);
