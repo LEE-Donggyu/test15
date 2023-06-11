@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:src="@drawable/hnulogo"
+            android:id="@+id/finditemImage"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/finditemText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/hannam_text"
+                android:textSize="50px"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:fontFamily="@font/hannamfree"
+                android:text="분실물" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="수정"
+                android:background="@color/hannam_color"
+                android:fontFamily="@font/hannamfree"
+                android:textSize="50px"
+                android:textColor="@color/white"
+                android:id="@+id/update"
+                android:layout_marginBottom="15dp"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="삭제"
+                android:background="@color/hannam_color"
+                android:fontFamily="@font/hannamfree"
+                android:textSize="50px"
+                android:textColor="@color/white"
+                android:id="@+id/delete"
+                android:layout_marginBottom="15dp"
+                />
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/hannam_color"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="작성자"
+            android:textColor="@color/white"
+            android:padding="3dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="5px"
+            android:layout_marginBottom="5px"
+            android:textColorHint="@color/white"
+            android:fontFamily="@font/hannamfree"
+            android:id="@+id/nameText"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="2023-05-31"
+            android:textColor="@color/white"
+            android:padding="3dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="5px"
+            android:layout_marginBottom="5px"
+            android:textColorHint="@color/white"
+            android:fontFamily="@font/hannamfree"
+            android:id="@+id/dateText"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

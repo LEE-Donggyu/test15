@@ -1,11 +1,15 @@
 package com.example.test4;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
-
-import androidx.appcompat.app.AppCompatActivity;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,23 +22,23 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LostItemActivity extends AppCompatActivity {
+public class finditemdriver extends AppCompatActivity {
 
     private String userID = null;
 
-    private ListView findListView;
+    private ListView findListupdateView;
     private FindItemAdapter adapter;
     private List<FindItem> findList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lost_item);
+        setContentView(R.layout.activity_finditemdriver);
 
-        findListView = findViewById(R.id.findlistView);
+        findListupdateView = findViewById(R.id.findlistupdateView);
         findList = new ArrayList<>();
         adapter = new FindItemAdapter(getApplicationContext(), findList);
-        findListView.setAdapter(adapter);
+        findListupdateView.setAdapter(adapter);
 
 
         Intent intent = getIntent();
