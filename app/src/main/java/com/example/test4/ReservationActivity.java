@@ -3,7 +3,9 @@ package com.example.test4;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -39,6 +41,7 @@ public class ReservationActivity extends AppCompatActivity {
     private TextView first_count;
     private TextView second_count;
     private Runnable sendDataRunnable;
+    private Runnable GetTicket;
     private String server_url;
 
     @Override
@@ -97,6 +100,58 @@ public class ReservationActivity extends AppCompatActivity {
                 turn_select = findViewById(R.id.turn_select);
                 first_turn = findViewById(R.id.first_turn);
                 second_turn = findViewById(R.id.second_turn);
+                GetTicket = new Runnable() {
+                    @Override
+                    public void run() {
+                        String server  = "http://bestknow98.cafe24.com/Getreservedata.php";
+                        try{
+                            URL url = new URL(server + "?date=" + date + "&userID=" + userID);
+                            Log.i("tag","url: "+url);
+                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                            conn.setRequestMethod("GET");
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                            StringBuilder response = new StringBuilder();
+                            String line;
+                            while ((line = reader.readLine()) != null) {
+                                response.append(line);
+                            }
+                            reader.close();
+                            Log.i("tag","response: "+response);
+                            JSONObject json = new JSONObject(response.toString());
+                            JSONArray responseArray = json.getJSONArray("response");
+                            if(responseArray.length() >= 1){
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Log.d("tag","예약된게 이미 있습니다.");
+                                        showAlertDialog("알림","선택한 날짜에 이미 예약된게 있습니다.");
+                                        turn_select.setVisibility(View.GONE);
+                                    }
+                                });
+                            }
+                            else{
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (route_item.equals("세종, 노은")) { //세종은 1회차밖에 없기 때문에 2회차 선택 레이아웃을 안보이게 한다.
+                                            turn_select.setVisibility(View.VISIBLE);
+                                            first_turn.setVisibility(View.VISIBLE);
+                                            second_turn.setVisibility(View.GONE);
+                                        } else {
+                                            turn_select.setVisibility(View.VISIBLE);
+                                            first_turn.setVisibility(View.VISIBLE);
+                                            second_turn.setVisibility(View.VISIBLE);
+                                        }
+
+                                    }
+                                });
+
+                            }
+                        } catch (Exception e){
+                            Log.i("tag","error:"+e);
+                        }
+                    }
+                };
                 sendDataRunnable = new Runnable() {
                     @Override
                     public void run() {
@@ -127,13 +182,28 @@ public class ReservationActivity extends AppCompatActivity {
                                 }
                             }
 
-                            int finalOnecount = 45 - onecount; //1회차 남은인원
-                            int finalTwocount = 45 - twocount; //2회차 남은인원
+                            int finalOnecount = 1 - onecount; //1회차 남은인원
+                            int finalTwocount = 1 - twocount; //2회차 남은인원
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     first_count.setText(String.valueOf(finalOnecount));
                                     second_count.setText(String.valueOf(finalTwocount));
+                                    if(finalOnecount == 0){
+                                        first_reserve.setEnabled(false);
+                                        first_reserve.setText("X");
+                                    } else{
+                                        first_reserve.setEnabled(true);
+                                        first_reserve.setText("선택");
+                                    }
+                                    if(finalTwocount == 0){
+                                        second_reserve.setEnabled(false);
+                                        second_reserve.setText("X");
+                                    }
+                                    else{
+                                        second_reserve.setEnabled(true);
+                                        second_reserve.setText("선택");
+                                    }
                                 }
                             });
                         } catch (Exception e) {
@@ -142,19 +212,13 @@ public class ReservationActivity extends AppCompatActivity {
 
                     }
                 };
-                Thread thread = new Thread(sendDataRunnable);
+                //GetTicket 실행
+                Thread thread = new Thread(GetTicket);
                 thread.start();
 
-                if (route_item.equals("세종, 노은")) { //세종은 1회차밖에 없기 때문에 2회차 선택 레이아웃을 안보이게 한다.
-                    turn_select.setVisibility(View.VISIBLE);
-                    first_turn.setVisibility(View.VISIBLE);
-                    second_turn.setVisibility(View.GONE);
-                } else {
-                    turn_select.setVisibility(View.VISIBLE);
-                    first_turn.setVisibility(View.VISIBLE);
-                    second_turn.setVisibility(View.VISIBLE);
-                }
-
+                // sendDataRunnable 실행
+                Thread th = new Thread(sendDataRunnable);
+                th.start();
             }
         });
 

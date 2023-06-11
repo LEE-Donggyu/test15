@@ -28,7 +28,7 @@ public class pickplaceActivity extends AppCompatActivity {
     private ReservationAdapter reservationAdapter;
     private List<ReservationItem> reservationList;
     private Button place_select;
-
+    private String selected_time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class pickplaceActivity extends AppCompatActivity {
                 String select_place;
                 ReservationItem selectedItem = (ReservationItem) reservationAdapter.getItem(position);
                 select_place = selectedItem.getStart(); //선택한리스트의 정류장값이 select_place에 들어감
-
+//                selected_time = selectedItem.getBus_time();
                 Intent next = new Intent(pickplaceActivity.this, ReservecheckActivity.class);
                 next.putExtra("date",date);
                 next.putExtra("place",select_place);
