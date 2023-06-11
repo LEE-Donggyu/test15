@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     String userID = null;
-    String userPassword = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

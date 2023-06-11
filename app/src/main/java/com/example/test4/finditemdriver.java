@@ -27,8 +27,10 @@ public class finditemdriver extends AppCompatActivity {
     private String userID = null;
 
     private ListView findListupdateView;
-    private FindItemAdapter adapter;
-    private List<FindItem> findList;
+    private UpdateItemAdapter adapter;
+    private List<UpdateItem> updateList;
+
+    private String id = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +38,8 @@ public class finditemdriver extends AppCompatActivity {
         setContentView(R.layout.activity_finditemdriver);
 
         findListupdateView = findViewById(R.id.findlistupdateView);
-        findList = new ArrayList<>();
-        adapter = new FindItemAdapter(getApplicationContext(), findList);
+        updateList = new ArrayList<>();
+        adapter = new UpdateItemAdapter(getApplicationContext(), updateList);
         findListupdateView.setAdapter(adapter);
 
 
@@ -91,15 +93,16 @@ public class finditemdriver extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
                 int count = 0;
-                String userName, LostDate, LostItemName, LostItemPicture;
+                String userName, LostDate, LostItemName, LostItemPicture, id;
                 while(count < jsonArray.length()){
                     JSONObject object = jsonArray.getJSONObject(count);
                     userName = object.getString("userName");
                     LostDate = object.getString("LostDate");
                     LostItemName = object.getString("LostItemName");
                     LostItemPicture = object.getString("LostItemPicture");
-                    FindItem findItem = new FindItem(LostItemName,  LostDate, userName, LostItemPicture);
-                    findList.add(findItem);
+                    id = object.getString("id");
+                    UpdateItem updateItem = new UpdateItem(id, LostItemName,  LostDate, userName, LostItemPicture);
+                    updateList.add(updateItem);
                     count++;
                 }
                 adapter.notifyDataSetChanged();

@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/hannamfree"
-                android:text="탑승지점 : "
+                android:text="탑승 지점 : "
                 android:textColor="@color/hannam_text" />
 
             <TextView
@@ -107,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/hannamfree"
-                android:text="회차 : "
+                android:text="탑승 시간 : "
                 android:textColor="@color/hannam_text" />
 
             <TextView
@@ -115,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/hannamfree"
-                android:text="탑승 회차"
+                android:text="탑승 시간"
                 android:textColor="@color/hannam_text" />
 
         </LinearLayout>

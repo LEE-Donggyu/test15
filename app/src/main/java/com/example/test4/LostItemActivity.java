@@ -87,13 +87,14 @@ public class LostItemActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
                 int count = 0;
-                String userName, LostDate, LostItemName, LostItemPicture;
+                String userName, LostDate, LostItemName, LostItemPicture, id;
                 while(count < jsonArray.length()){
                     JSONObject object = jsonArray.getJSONObject(count);
                     userName = object.getString("userName");
                     LostDate = object.getString("LostDate");
                     LostItemName = object.getString("LostItemName");
                     LostItemPicture = object.getString("LostItemPicture");
+
                     FindItem findItem = new FindItem(LostItemName,  LostDate, userName, LostItemPicture);
                     findList.add(findItem);
                     count++;

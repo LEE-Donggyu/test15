@@ -1,13 +1,11 @@
 package com.example.test4;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -19,9 +17,9 @@ public class FindItemAdapter extends BaseAdapter {
     private Context context;
     private List<FindItem> findList;
 
-    public FindItemAdapter(Context context, List<FindItem> findList) {
+    public FindItemAdapter(Context context, List<FindItem> FindList) {
         this.context = context;
-        this.findList = findList;
+        this.findList = FindList;
     }
 
     @Override
@@ -41,7 +39,7 @@ public class FindItemAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
-        View v = View.inflate(context, R.layout.finditemupdate, null);
+        View v = View.inflate(context, R.layout.finditem, null);
         TextView itemText = v.findViewById(R.id.finditemText);
         TextView nameText = v.findViewById(R.id.nameText);
         TextView dateText = v.findViewById(R.id.dateText);
