@@ -1,6 +1,5 @@
 package com.example.test4;
 
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -26,7 +25,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-// 지도 표시 Activity
 public class drivingActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -37,7 +35,7 @@ public class drivingActivity extends AppCompatActivity implements OnMapReadyCall
     String userID;
 
     @Override
-    protected void onCreate(Bundle savedInstance){
+    protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_driving);
         String page = "http://bestknow98.cafe24.com/location_1.php";  // 운전기사가 서버로 위도 경도 업데이트
@@ -50,7 +48,6 @@ public class drivingActivity extends AppCompatActivity implements OnMapReadyCall
                 != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            // 필요한 권한이 없는 경우 권한 요청
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                     1);
@@ -67,59 +64,58 @@ public class drivingActivity extends AppCompatActivity implements OnMapReadyCall
                 drivingActivity.this.startActivity(end);
             }
         });
+
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
-                sendDataRunnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        String params = "param=" + location.getLatitude() + "&param2=" + location.getLongitude()+ "&id="+userID;
-                        try{
-                            URL url = new URL(page);
-                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                            if (conn != null){
-                                Log.i("tag","conn 연결");
-                                conn.setRequestProperty("Accept","application/json");
-                                conn.setRequestMethod("POST");
-                                conn.setDoOutput(true);
-                                OutputStream outputStream = conn.getOutputStream();
-                                conn.getOutputStream().write(params.getBytes("utf-8"));
-                                if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
-                                    Log.i("tag","접속");
+                if (mMap != null) {
+                    double latitude = location.getLatitude();
+                    double longitude = location.getLongitude();
+                    sendDataRunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            String params = "param=" + location.getLatitude() + "&param2=" + location.getLongitude() + "&id=" + userID;
+                            try {
+                                URL url = new URL(page);
+                                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                                if (conn != null) {
+                                    conn.setRequestProperty("Accept", "application/json");
+                                    conn.setRequestMethod("POST");
+                                    conn.setDoOutput(true);
+                                    OutputStream outputStream = conn.getOutputStream();
+                                    conn.getOutputStream().write(params.getBytes("utf-8"));
+                                    if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                                        Log.i("tag", "접속");
+                                    }
+                                    outputStream.flush();
+                                    outputStream.close();
+                                    conn.disconnect();
                                 }
-                                outputStream.flush();
-                                outputStream.close();
-                                conn.disconnect();
+                            } catch (Exception e) {
+                                Log.i("tag", "error: " + e);
                             }
-                        }catch (Exception e){
-                            Log.i("tag","error :" + e);
                         }
-                    }
-                };
-                Thread thread = new Thread(sendDataRunnable);
-                thread.start();
-                LatLng currentLocation = new LatLng(latitude, longitude);
-                Log.d("location",location.toString());
-                mMap.clear();
-                mMap.addMarker(new MarkerOptions().position(currentLocation).title("현재 위치"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,15));
+                    };
+                    Thread thread = new Thread(sendDataRunnable);
+                    thread.start();
+                    LatLng currentLocation = new LatLng(latitude, longitude);
+                    mMap.clear();
+                    mMap.addMarker(new MarkerOptions().position(currentLocation).title("현재 위치"));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
+                }
             }
         };
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,0,locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            // 필요한 권한이 없는 경우 권한 요청
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                     1);
@@ -128,15 +124,13 @@ public class drivingActivity extends AppCompatActivity implements OnMapReadyCall
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap){
+    public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
     }
+
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         super.onDestroy();
         locationManager.removeUpdates(locationListener);
-
     }
-
 }
