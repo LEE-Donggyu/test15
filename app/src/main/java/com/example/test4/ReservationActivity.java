@@ -182,8 +182,8 @@ public class ReservationActivity extends AppCompatActivity {
                                 }
                             }
 
-                            int finalOnecount = 1 - onecount; //1회차 남은인원
-                            int finalTwocount = 1 - twocount; //2회차 남은인원
+                            int finalOnecount = 45 - onecount; //1회차 남은인원
+                            int finalTwocount = 45 - twocount; //2회차 남은인원
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

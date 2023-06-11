@@ -29,13 +29,13 @@ public class driverActivity extends AppCompatActivity {
         }
 
         if(userID.equals("admin1")){
-            route.setText("도안 노선");
+            route.setText("도안");
         } else if (userID.equals("admin2")) {
-            route.setText("세종, 노은 노선");
+            route.setText("세종, 노은");
         } else if (userID.equals("admin3")) {
-            route.setText("계룡, 진잠, 관저동 노선");
+            route.setText("계룡, 진잠, 관저동");
         } else if (userID.equals("admin4")) {
-            route.setText("가오동, 판암동 노선");
+            route.setText("가오동, 판암동");
         }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
