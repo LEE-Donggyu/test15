@@ -14,7 +14,6 @@ import androidx.core.app.ActivityCompat;
 public class driverActivity extends AppCompatActivity {
 
     private String userID;
-    private String userPassword;
     private TextView route;
 
     @Override
@@ -27,7 +26,6 @@ public class driverActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             userID = intent.getStringExtra("userID");
-            userPassword = intent.getStringExtra("userPassword");
         }
 
         if(userID.equals("admin1")){
@@ -67,10 +65,20 @@ public class driverActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent lostItemUploadIntent = new Intent(driverActivity.this, LostitemUploadActivity.class);
                 lostItemUploadIntent.putExtra("userID", userID);
-                lostItemUploadIntent.putExtra("userPassword", userPassword);
                 startActivity(lostItemUploadIntent);
             }
         });
+
+        Button finditemupdate = findViewById(R.id.finditemupdate);
+        finditemupdate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent finditemupdate = new Intent(driverActivity.this, finditemdriver.class);
+                finditemupdate.putExtra("userID", userID);
+                startActivity(finditemupdate);
+            }
+        });
+
         
     }
 

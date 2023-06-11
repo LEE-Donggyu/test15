@@ -62,6 +62,7 @@
                 android:fontFamily="@font/hannamfree"
                 android:background="@color/white"
                 android:textSize="35dp"
+                android:id="@+id/finditemupdate"
                 android:text="분실물 관리"/>
 
         </LinearLayout>

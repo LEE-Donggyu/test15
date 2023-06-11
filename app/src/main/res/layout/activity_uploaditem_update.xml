@@ -103,12 +103,12 @@
                 android:src="@drawable/hnulogo" />
 
             <Button
-                android:id="@+id/finaluploadButton"
+                android:id="@+id/itemupdateButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/uploadimg"
                 android:background="@color/hannam_color"
-                android:text="업로드"
+                android:text="수정"
                 android:textColor="@color/white"
                 android:textSize="40dp" />
 
