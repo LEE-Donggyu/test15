@@ -1,5 +1,7 @@
 package com.example.test4;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -7,8 +9,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,6 +43,7 @@ public class ReservecheckActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservedata_check);
         String page = "http://bestknow98.cafe24.com/complete.php";
+        String count_page = "http://bestknow98.cafe24.com/reservecount.php";
         String load_name = "https://stone-cjioq.run.goorm.io/stone/Getusername.php";
         Intent intent = getIntent();
         String userID = intent.getStringExtra("userID");
@@ -58,40 +67,69 @@ public class ReservecheckActivity extends AppCompatActivity {
                 //날짜 픽업장소 회차 노선이름 유저아이디
                 {
                     String data = "date="+date+"&place="+place+"&turn="+turn+"&route="+route+"&userID="+userID;
-                    sendDataRunnable = new Runnable() {
+                    @SuppressLint("StaticFieldLeak") AsyncTask<String, Void, Boolean> sendDataTask = new AsyncTask<String, Void, Boolean>() {
                         @Override
-                        public void run() {
+                        protected Boolean doInBackground(String... params) {
                             try{
-                                URL url = new URL(page);
+                                String data = params[0];
+                                URL url = new URL(count_page + "?date=" + date + "&routename=" + route);
                                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                                if(conn != null){
+                                conn.setRequestMethod("GET");
+                                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                                StringBuilder response = new StringBuilder();
+                                String line;
+                                while ((line = reader.readLine()) != null) {
+                                    response.append(line);
+                                }
+                                reader.close();
+                                Log.i("tag","response: "+response);
+                                JSONObject json = new JSONObject(response.toString());
+                                JSONArray responseArray = json.getJSONArray("response");
+                                Log.i("tag","예약갯수: "+responseArray.length());
+
+                                if(responseArray.length() >= 45){
+                                    return false;
+                                } else{
+                                    URL data_url = new URL(page);
+                                    HttpURLConnection connection = (HttpURLConnection) data_url.openConnection();
                                     Log.i("tag","conn 연결");
-                                    conn.setRequestProperty("Accept","application/json");
-                                    conn.setRequestMethod("POST");
-                                    conn.setDoOutput(true);
-                                    OutputStream outputStream = conn.getOutputStream();
-                                    conn.getOutputStream().write(data.getBytes("utf-8"));
-                                    if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+                                    connection.setRequestProperty("Accept","application/json");
+                                    connection.setRequestMethod("POST");
+                                    connection.setDoOutput(true);
+                                    OutputStream outputStream = connection.getOutputStream();
+                                    connection.getOutputStream().write(data.getBytes("utf-8"));
+                                    if(connection.getResponseCode() == HttpURLConnection.HTTP_OK){
                                         Log.i("tag","접속");
                                     }
                                     outputStream.flush();
                                     outputStream.close();
-                                    conn.disconnect();
+                                    connection.disconnect();
+                                    return true;
                                 }
-                            }catch (Exception e){
-                                Log.i("tag","error :"+e);
+                            } catch (Exception e){
+                                Log.i("tag","error: "+e);
+                                return false;
+                            }
+                        }
+                        @Override
+                        protected void onPostExecute(Boolean result){
+                            if(result){
+                                Intent next = new Intent(ReservecheckActivity.this, ReservecompleteActivity.class);
+                                next.putExtra("userID", userID);
+                                startActivity(next);
+                                finishAffinity();
+                            } else{
+                                showAlertDialog("알림","죄송합니다, 인원이 다 찼습니다");
                             }
                         }
                     };
-                    Thread thread = new Thread(sendDataRunnable);
-                    thread.start();
+
+                    sendDataTask.execute(data);
                 }
-                Intent next = new Intent(ReservecheckActivity.this, ReservecompleteActivity.class);
-                next.putExtra("userID",userID);
-                startActivity(next);
-                finishAffinity();
             }
         });
+
+
 
     }
     private class HttpRequestTask extends AsyncTask<String, Void, String>{
@@ -145,6 +183,29 @@ public class ReservecheckActivity extends AppCompatActivity {
             }
         }
     }
+    private void showAlertDialog(String title, String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.i("tag","알림 다이얼로그 표시");
+                AlertDialog.Builder builder = new AlertDialog.Builder(ReservecheckActivity.this);
+                builder.setTitle(title)
+                        .setMessage(message)
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .show();
+
+
+            }
+        });
+    }
+
+
+
     @Override
     protected void onDestroy(){
         super.onDestroy();

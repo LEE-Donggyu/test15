@@ -182,8 +182,8 @@ public class ReservationActivity extends AppCompatActivity {
                                 }
                             }
 
-                            int finalOnecount = 1 - onecount; //1회차 남은인원
-                            int finalTwocount = 1 - twocount; //2회차 남은인원
+                            int finalOnecount = 45 - onecount; //1회차 남은인원
+                            int finalTwocount = 45 - twocount; //2회차 남은인원
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -270,25 +270,29 @@ public class ReservationActivity extends AppCompatActivity {
     private void showDatePicker() {
         final Calendar currentDate = Calendar.getInstance();
         final Calendar dateLimit = Calendar.getInstance();
-        dateLimit.add(Calendar.DAY_OF_MONTH, 3); //날짜선택 가능 수는 현재날짜에서부터 3일이므로 현재날짜를 포함하면 4일이다.
 
-        // 오늘 날짜를 선택하지 못하도록 최소 날짜를 현재 날짜로 설정
         currentDate.set(Calendar.HOUR_OF_DAY, 0);
         currentDate.set(Calendar.MINUTE, 0);
         currentDate.set(Calendar.SECOND, 0);
         currentDate.set(Calendar.MILLISECOND, 0);
 
-
-        // 주말인 토요일과 일요일은 선택하지 못하도록 설정
         int dayOfWeek = currentDate.get(Calendar.DAY_OF_WEEK);
-        if (dayOfWeek == Calendar.FRIDAY) {
-            currentDate.add(Calendar.DAY_OF_MONTH, 3); // 금요일인 경우 일요일까지 선택 불가능
+        if (dayOfWeek == Calendar.WEDNESDAY) {
+            currentDate.add(Calendar.DAY_OF_MONTH, 1);
+            dateLimit.add(Calendar.DAY_OF_MONTH, 2);
+        } else if (dayOfWeek == Calendar.THURSDAY) {
+            currentDate.add(Calendar.DAY_OF_MONTH, 1);
+            dateLimit.add(Calendar.DAY_OF_MONTH, 1);
+        } else if (dayOfWeek == Calendar.FRIDAY) {
+            currentDate.add(Calendar.DAY_OF_MONTH, 3);
+            dateLimit.add(Calendar.DAY_OF_MONTH, 3);
         } else if (dayOfWeek == Calendar.SATURDAY) {
-            currentDate.add(Calendar.DAY_OF_MONTH, 2); // 토요일인 경우 일요일까지 선택 불가능
+            currentDate.add(Calendar.DAY_OF_MONTH, 2);
+            dateLimit.add(Calendar.DAY_OF_MONTH, 3);
         } else {
-            currentDate.add(Calendar.DAY_OF_MONTH, 1); // 그 외의 경우 다음 날짜까지 선택 불가능
+            currentDate.add(Calendar.DAY_OF_MONTH, 1);
+            dateLimit.add(Calendar.DAY_OF_MONTH, 3);
         }
-
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -303,6 +307,7 @@ public class ReservationActivity extends AppCompatActivity {
         datePickerDialog.getDatePicker().setMaxDate(dateLimit.getTimeInMillis());
         datePickerDialog.show();
     }
+
 
     private void updateSelectedDateButton() {
         if (calendar != null) {
