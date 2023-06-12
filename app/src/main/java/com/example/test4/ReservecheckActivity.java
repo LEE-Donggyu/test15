@@ -44,7 +44,7 @@ public class ReservecheckActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reservedata_check);
         String page = "http://bestknow98.cafe24.com/complete.php";
         String count_page = "http://bestknow98.cafe24.com/reservecount.php";
-        String load_name = "https://stone-cjioq.run.goorm.io/stone/Getusername.php";
+        String load_name = "http://bestknow98.cafe24.com/Getusername.php";
         Intent intent = getIntent();
         String userID = intent.getStringExtra("userID");
 
