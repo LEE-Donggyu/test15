@@ -3,6 +3,7 @@ package com.example.test4;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -58,7 +59,6 @@ public class UpdateItemAdapter extends BaseAdapter {
         TextView dateText = v.findViewById(R.id.dateText);
         ImageView imageView = v.findViewById(R.id.finditemImage);
         Button updateButton = v.findViewById(R.id.update);
-        Button deleteButton = v.findViewById(R.id.delete);
 
         itemText.setText(updateList.get(i).getItem());
         nameText.setText(updateList.get(i).getName());
@@ -68,40 +68,16 @@ public class UpdateItemAdapter extends BaseAdapter {
         Picasso.get().load(imagePath).into(imageView);
 
 
-        // 삭제 버튼
-        deleteButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context); // context를 사용
-                builder.setTitle("알림");
-                builder.setMessage("정말로 삭제하시겠습니까?");
-                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // 삭제 이벤트 실행
-                        deleteItemFromDatabase(id);
-                    }
-                });
-                builder.setNegativeButton("아니요", null);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
-
-
-
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String item = updateList.get(i).getItem();
                 String name = updateList.get(i).getName();
                 String date = updateList.get(i).getDate();
                 String image = updateList.get(i).getImagepath();
 
-                // 아이템 수정 버튼 클릭 시 LostitemUploadActivity로 이동
                 Intent intent = new Intent(context, uploaditemUpdate.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  // FLAG_ACTIVITY_NEW_TASK 플래그 추가
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("id", id);
                 intent.putExtra("item", item);
                 intent.putExtra("name", name);
@@ -110,37 +86,9 @@ public class UpdateItemAdapter extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
+
         return v;
     }
-    private void deleteItemFromDatabase(String id) {
-        String url = "http://bestknow98.cafe24.com/deleteitem.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if (response.equals("success")) {
-                            Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
-                            // 삭제 후 필요한 동작 수행
-                        } else {
-                            Toast.makeText(context, "삭제에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("id", id);
-                return params;
-            }
-        };
 
-        RequestQueue queue = Volley.newRequestQueue(context.getApplicationContext());
-        queue.add(stringRequest);
-    }
+
 }

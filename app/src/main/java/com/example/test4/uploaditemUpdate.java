@@ -37,14 +37,8 @@ import java.util.Map;
 
 public class uploaditemUpdate extends AppCompatActivity {
 
-    private String userID;
     private String id;
-
-    private String date;
     private Bitmap bitmap;
-    private String item;
-    private String name;
-    private String image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,15 +53,14 @@ public class uploaditemUpdate extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             id = intent.getStringExtra("id");
-            userID = intent.getStringExtra("userID");
-            date = intent.getStringExtra("date");
-            name = intent.getStringExtra("name");
-            item = intent.getStringExtra("item");
-            image = intent.getStringExtra("image");
-        }
+            String item = intent.getStringExtra("item");
+            String name = intent.getStringExtra("name");
+            String date = intent.getStringExtra("date");
+            String image = intent.getStringExtra("image");
 
-        editText.setText(item);
-        Picasso.get().load("http://bestknow98.cafe24.com/" + image).into(imageView);
+            editText.setText(item);
+            Picasso.get().load("http://bestknow98.cafe24.com/" + image).into(imageView);
+        }
 
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -97,7 +90,7 @@ public class uploaditemUpdate extends AppCompatActivity {
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String uploadItem = ((EditText) findViewById(R.id.LostItemNameText)).getText().toString();
+                String uploadItem = editText.getText().toString();
                 String uploadTime = getCurrentTime();
                 ByteArrayOutputStream byteArrayOutputStream;
                 byteArrayOutputStream = new ByteArrayOutputStream();
@@ -114,18 +107,15 @@ public class uploaditemUpdate extends AppCompatActivity {
                         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                         String url = "http://bestknow98.cafe24.com/update.php";
 
-
                         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
                                         if (response.equals("success")) {
-                                            Toast.makeText(getApplicationContext(), "분실물 목록에 추가하였습니다.", Toast.LENGTH_SHORT).show();
-                                            Intent successintent = new Intent(uploaditemUpdate.this, LostItemActivity.class);
-                                            startActivity(successintent);
+                                            Toast.makeText(getApplicationContext(), "분실물이 수정되었습니다.", Toast.LENGTH_SHORT).show();
                                             finish();
                                         } else {
-                                            Toast.makeText(getApplicationContext(), "분실물 추가에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(), "분실물 수정에 실패했습니다.", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 },
@@ -139,7 +129,6 @@ public class uploaditemUpdate extends AppCompatActivity {
                             protected Map<String, String> getParams() {
                                 Map<String, String> params = new HashMap<>();
                                 params.put("id", id);
-                                params.put("userID", userID);
                                 params.put("uploadItem", uploadItem);
                                 params.put("uploadTime", uploadTime);
                                 params.put("image", base64Image);
@@ -150,7 +139,7 @@ public class uploaditemUpdate extends AppCompatActivity {
                         queue.add(stringRequest);
                     }
                     else {
-                        Toast.makeText(getApplicationContext(), "이미지를 먼저 선택해주세요", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "이미지를 다시 선택해주세요", Toast.LENGTH_SHORT).show();
                     }
 
                 }

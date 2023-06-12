@@ -48,18 +48,6 @@
                 android:layout_marginBottom="15dp"
                 />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="삭제"
-                android:background="@color/hannam_color"
-                android:fontFamily="@font/hannamfree"
-                android:textSize="50px"
-                android:textColor="@color/white"
-                android:id="@+id/delete"
-                android:layout_marginBottom="15dp"
-                />
-
 
         </LinearLayout>
 

@@ -16,10 +16,21 @@
         android:textSize="50dp"
         android:layout_marginBottom="30px"/>
 
-    <ListView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/content_srl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/findlistupdateView"/>
+        android:layout_weight="1"
+        >
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/findlistupdateView"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 
 
 </LinearLayout>
