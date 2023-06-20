@@ -82,8 +82,8 @@ public class LostitemUploadActivity extends AppCompatActivity {
         });
 
         Button finaluploadButton = findViewById(R.id.finaluploadButton);
-        finaluploadButton.setOnClickListener(new View.OnClickListener() {
 
+        finaluploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String uploadID = userID;
@@ -91,7 +91,6 @@ public class LostitemUploadActivity extends AppCompatActivity {
                 String uploadTime = getCurrentTime();
                 ByteArrayOutputStream byteArrayOutputStream;
                 byteArrayOutputStream = new ByteArrayOutputStream();
-
                 if(uploadItem.equals("")){
                     Toast.makeText(getApplicationContext(), "분실물의 이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
                 }
@@ -103,8 +102,6 @@ public class LostitemUploadActivity extends AppCompatActivity {
 
                         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                         String url = "http://bestknow98.cafe24.com/upload.php";
-
-
                         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                                 new Response.Listener<String>() {
                                     @Override
@@ -144,8 +141,6 @@ public class LostitemUploadActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     private String getCurrentTime() {

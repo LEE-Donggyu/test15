@@ -52,7 +52,8 @@ public class ReservationActivity extends AppCompatActivity {
         userID = intent.getStringExtra("userID");
         select_route = findViewById(R.id.route_select);
         server_url = "http://bestknow98.cafe24.com/reservecount.php";
-        select_route.setOnClickListener(new View.OnClickListener() { //노선선택 버튼 코드
+
+        select_route.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ReservationActivity.this);
@@ -72,18 +73,21 @@ public class ReservationActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+
         select_date = findViewById(R.id.date_select);
-        select_date.setOnClickListener(new View.OnClickListener() { //날짜선택 코드
+
+        select_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDatePicker();
             }
         });
+
         view_btn = findViewById(R.id.route_check);
-        view_btn.setOnClickListener(new View.OnClickListener() { //조회버튼 코드
+
+        view_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (route_item.isEmpty()) {
                     showAlertDialog("알림", "노선을 선택해주세요.");
                     return;
@@ -92,7 +96,6 @@ public class ReservationActivity extends AppCompatActivity {
                     showAlertDialog("알림", "날짜를 선택해주세요.");
                     return;
                 }
-
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 String date = dateFormat.format(calendar.getTime());
                 first_count = findViewById(R.id.firstcount);
@@ -133,7 +136,7 @@ public class ReservationActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        if (route_item.equals("세종, 노은")) { //세종은 1회차밖에 없기 때문에 2회차 선택 레이아웃을 안보이게 한다.
+                                        if (route_item.equals("세종, 노은")) {
                                             turn_select.setVisibility(View.VISIBLE);
                                             first_turn.setVisibility(View.VISIBLE);
                                             second_turn.setVisibility(View.GONE);
@@ -152,6 +155,8 @@ public class ReservationActivity extends AppCompatActivity {
                         }
                     }
                 };
+
+
                 sendDataRunnable = new Runnable() {
                     @Override
                     public void run() {
@@ -170,8 +175,8 @@ public class ReservationActivity extends AppCompatActivity {
                             JSONObject json = new JSONObject(response.toString());
                             JSONArray responseArray = json.getJSONArray("response");
 
-                            int onecount = 0; //1회차정보 세기
-                            int twocount = 0; //2회차정보 세기
+                            int onecount = 0;
+                            int twocount = 0;
                             for (int i = 0; i < responseArray.length(); i++) {
                                 JSONObject item = responseArray.getJSONObject(i);
                                 String turn = item.getString("turn");
@@ -182,8 +187,8 @@ public class ReservationActivity extends AppCompatActivity {
                                 }
                             }
 
-                            int finalOnecount = 45 - onecount; //1회차 남은인원
-                            int finalTwocount = 45 - twocount; //2회차 남은인원
+                            int finalOnecount = 45 - onecount;
+                            int finalTwocount = 45 - twocount;
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -212,11 +217,9 @@ public class ReservationActivity extends AppCompatActivity {
 
                     }
                 };
-                //GetTicket 실행
                 Thread thread = new Thread(GetTicket);
                 thread.start();
 
-                // sendDataRunnable 실행
                 Thread th = new Thread(sendDataRunnable);
                 th.start();
             }
@@ -224,7 +227,8 @@ public class ReservationActivity extends AppCompatActivity {
 
         first_reserve = findViewById(R.id.first_reserve);
         second_reserve = findViewById(R.id.second_reserve);
-        first_reserve.setOnClickListener(new View.OnClickListener() { //1회차는 turn이라는 회차를 저장하는 변수에 1을 넘긴다
+
+        first_reserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (calendar == null || route_item.isEmpty()) {
@@ -237,15 +241,15 @@ public class ReservationActivity extends AppCompatActivity {
                 int turn = 1; //회차
 
                 Intent next = new Intent(ReservationActivity.this, pickplaceActivity.class);
-                next.putExtra("userID", userID); //유저아이디
-                next.putExtra("turn", turn); //회차
-                next.putExtra("select_route", route_item); //선택노선
-                next.putExtra("select_date", date); //선택날짜
+                next.putExtra("userID", userID);
+                next.putExtra("turn", turn);
+                next.putExtra("select_route", route_item);
+                next.putExtra("select_date", date);
                 startActivity(next);
             }
         });
 
-        second_reserve.setOnClickListener(new View.OnClickListener() {//2회차는 turn이라는 회차를 저장하는 변수에 2을 넘긴다
+        second_reserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (calendar == null || route_item.isEmpty()) {

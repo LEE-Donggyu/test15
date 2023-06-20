@@ -70,9 +70,9 @@ public class BuslocationActivity extends AppCompatActivity {
             @Override
             public void run() {
                 fetchAndDisplayLocation();
-                handler.postDelayed(this, 1000); // 1초마다 업데이트
+                handler.postDelayed(this, 1000);
             }
-        },0); // 초기 1초 대기 후 시작
+        },0);
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -81,7 +81,7 @@ public class BuslocationActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(Void... params) {
                 try {
-                    String server_url = "http://bestknow98.cafe24.com/buslocation.php";     // 버스 위치 확인
+                    String server_url = "http://bestknow98.cafe24.com/buslocation.php";
                     URL url = new URL(server_url + "?id=" + busID);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");
@@ -107,7 +107,7 @@ public class BuslocationActivity extends AppCompatActivity {
                     try {
                         JSONObject locationObject = new JSONObject(response);
                         JSONArray jsonArray = locationObject.getJSONArray("response");
-                        JSONObject object = jsonArray.getJSONObject(0); //응답배열에 첫번째열값 가져오기
+                        JSONObject object = jsonArray.getJSONObject(0);
                         double lat = object.getDouble("lat");
                         double lon = object.getDouble("lon");
                         Log.i("tag","lat:"+lat+",lon:"+lon);

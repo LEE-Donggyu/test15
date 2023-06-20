@@ -35,17 +35,17 @@ public class pickplaceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pickupplace);
         Intent intent = getIntent();
-        String date = intent.getStringExtra("select_date"); //선택날짜
-        String route = intent.getStringExtra("select_route"); //선택노선
-        String userID = intent.getStringExtra("userID"); //유저아이디
-        int turn = intent.getIntExtra("turn", 0); //선택회차
+        String date = intent.getStringExtra("select_date");
+        String route = intent.getStringExtra("select_route");
+        String userID = intent.getStringExtra("userID");
+        int turn = intent.getIntExtra("turn", 0);
         ReservationListView = findViewById(R.id.placeviewlist);
         reservationList = new ArrayList<>();
         reservationAdapter = new ReservationAdapter(pickplaceActivity.this, reservationList);
         ReservationListView.setAdapter(reservationAdapter);
         reservationList.clear();
         int routeID = 0;
-        if(route.equals("도안")){ //앞에 선택한노선이 도안이면 routeID에 1을주어 도안과 연관된 정류장을 DB에서 가져옴
+        if(route.equals("도안")){
             routeID = 1;
         } else if (route.equals("세종, 노은")) {
             routeID = 2;
@@ -60,7 +60,7 @@ public class pickplaceActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String select_place;
                 ReservationItem selectedItem = (ReservationItem) reservationAdapter.getItem(position);
-                select_place = selectedItem.getStart(); //선택한리스트의 정류장값이 select_place에 들어감
+                select_place = selectedItem.getStart();
 //                selected_time = selectedItem.getBus_time();
                 Intent next = new Intent(pickplaceActivity.this, ReservecheckActivity.class);
                 next.putExtra("date",date);

@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         findButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // activity_lost_item으로 이동하는 Intent 생성
                 Intent lostitemintent = new Intent(MainActivity.this, LostItemActivity.class);
                 lostitemintent.putExtra("userID", userID);
                 startActivity(lostitemintent);
@@ -39,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         reservationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // activity_reservation으로 이동하는 Intent 생성
                 Intent reservation = new Intent(MainActivity.this, ReservationActivity.class);
                 reservation.putExtra("userID", userID);
                 startActivity(reservation);
@@ -49,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         ticketButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // activity_ticket으로 이동하는 Intent 생성
                 Intent ticketintent = new Intent(MainActivity.this, TicketActivity.class);
                 ticketintent.putExtra("userID", userID);
                 startActivity(ticketintent);
@@ -59,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         buslocButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // activity_location_select으로 이동하는 Intent 생성
                 Intent busloc = new Intent(MainActivity.this, LocationselectActivity.class);
                 busloc.putExtra("userID",userID);
                 startActivity(busloc);

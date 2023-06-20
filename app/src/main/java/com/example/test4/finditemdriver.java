@@ -33,7 +33,7 @@ public class finditemdriver extends AppCompatActivity {
     private SwipeRefreshLayout mysrl;
     private List<UpdateItem> updateList;
 
-    private int currentPage = 0; // Keep track of the current page
+    private int currentPage = 0;
 
     private String id = null;
 
@@ -51,14 +51,13 @@ public class finditemdriver extends AppCompatActivity {
         mysrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                currentPage = 0; // Reset to the first page
-                updateList.clear(); // Clear the existing list
+                currentPage = 0;
+                updateList.clear();
                 new BackgroundTask().execute(currentPage);
                 mysrl.setRefreshing(false);
             }
         });
 
-        // Set a scroll listener for lazy loading
         findListupdateView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -78,12 +77,12 @@ public class finditemdriver extends AppCompatActivity {
             userID = intent.getStringExtra("userID");
         }
 
-        new BackgroundTask().execute(currentPage); // Load the initial page
+        new BackgroundTask().execute(currentPage);
     }
 
     class BackgroundTask extends AsyncTask<Integer, Void, String> {
 
-        private static final int ITEMS_PER_PAGE = 10; // Number of items to load per page
+        private static final int ITEMS_PER_PAGE = 10;
         private int currentPage = 0;
 
         String target;

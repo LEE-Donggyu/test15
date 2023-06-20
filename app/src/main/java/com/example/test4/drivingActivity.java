@@ -38,7 +38,7 @@ public class drivingActivity extends AppCompatActivity implements OnMapReadyCall
     protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_driving);
-        String page = "http://bestknow98.cafe24.com/location_1.php";  // 운전기사가 서버로 위도 경도 업데이트
+        String page = "http://bestknow98.cafe24.com/location_1.php";
         Intent intent = getIntent();
         userID = intent.getStringExtra("userID");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -66,6 +66,7 @@ public class drivingActivity extends AppCompatActivity implements OnMapReadyCall
         });
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {

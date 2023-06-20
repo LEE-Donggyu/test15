@@ -61,15 +61,13 @@ public class LoginActivity extends AppCompatActivity {
                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                 if(userID.equals("admin1") || userID.equals("admin2") || userID.equals("admin3") || userID.equals("admin4")){
                                                     Intent intent = new Intent(LoginActivity.this, driverActivity.class);
-                                                    intent.putExtra("userID", userID); // 아이디값을 Intent에 추가
-                                                    intent.putExtra("userPassword", userPassword); // 비밀번호값을 Intent에 추가
+                                                    intent.putExtra("userID", userID);
                                                     LoginActivity.this.startActivity(intent);
                                                     finish();
                                                 }
                                                 else{
                                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                                    intent.putExtra("userID", userID); // 아이디값을 Intent에 추가
-                                                    intent.putExtra("userPassword", userPassword); // 비밀번호값을 Intent에 추가
+                                                    intent.putExtra("userID", userID);
                                                     LoginActivity.this.startActivity(intent);
                                                     finish();
                                                 }

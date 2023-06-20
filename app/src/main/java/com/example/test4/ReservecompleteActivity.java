@@ -16,7 +16,7 @@ public class ReservecompleteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_complete);
 
         Intent intent = getIntent();
-        userID = intent.getStringExtra("userID"); //유저아이디
+        userID = intent.getStringExtra("userID");
 
 
         home = findViewById(R.id.home);

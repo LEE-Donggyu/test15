@@ -53,4 +53,5 @@ public class FindItemAdapter extends BaseAdapter {
 
         return v;
     }
+
 }

@@ -61,10 +61,10 @@ public class ReservecheckActivity extends AppCompatActivity {
 
 
         complete = findViewById(R.id.reserve_complete);
+
         complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //날짜 픽업장소 회차 노선이름 유저아이디
                 {
                     String data = "date="+date+"&place="+place+"&turn="+turn+"&route="+route+"&userID="+userID;
                     @SuppressLint("StaticFieldLeak") AsyncTask<String, Void, Boolean> sendDataTask = new AsyncTask<String, Void, Boolean>() {
@@ -86,7 +86,6 @@ public class ReservecheckActivity extends AppCompatActivity {
                                 JSONObject json = new JSONObject(response.toString());
                                 JSONArray responseArray = json.getJSONArray("response");
                                 Log.i("tag","예약갯수: "+responseArray.length());
-
                                 if(responseArray.length() >= 45){
                                     return false;
                                 } else{
